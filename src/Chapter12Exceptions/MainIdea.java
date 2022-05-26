@@ -1,6 +1,7 @@
 package Chapter12Exceptions;
 
 import java.awt.desktop.SystemSleepEvent;
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -26,7 +27,101 @@ public class MainIdea {
 
 //        long value = Long.MAX_VALUE + 10000;
 //        System.out.println(value); will not throw exception but will overflow
+
+//        #1
+//        String s = "abc";
+//        System.out.println(s.charAt(3));
+//        #2
+//        Object o = new Object();
+//        String d = (String)o;
+//        #3
+//        Object o = null;
+//        System.out.println(o.toString());
+//
+//        System.out.println(1.0 / 0); --> No Exception will occur
+
+//        #4
+//        try {
+//            int[] list = new int[10];
+//            System.out.println("list[10] is " + list[10]);
+//        }
+//        catch (ArithmeticException ex) {
+//            System.out.println("ArithmeticException");
+//        }
+//        catch (RuntimeException ex) {
+//            System.out.println("RuntimeException");
+//        }
+//        catch (Exception ex) {
+//            System.out.println("Exception");
+//        }
+//        #5
+//        try {
+//            method();
+//            System.out.println("After the method call");
+//        }
+//        catch (ArithmeticException ex) {
+//            System.out.println("ArithmeticException");
+//        }
+//        catch (RuntimeException ex) {
+//            System.out.println("RuntimeException");
+//        }
+//        catch (Exception e) {
+//            System.out.println("Exception");
+//        }
+//        #6
+//        try {
+//            method();
+//            System.out.println("After the method call");
+//        }
+//        catch (RuntimeException ex) {
+//            System.out.println("RuntimeException in main");
+//        }
+//        catch (Exception ex) {
+//            System.out.println("Exception in main");
+//        }
+
+//        try{
+//            System.out.println(1/0);
+//        }catch (InputMismatchException ex){
+//            System.out.println(ex.getMessage());
+//        }
+//        finally {
+//            System.out.println("Finally");
+//        }
+//        System.out.println("Done");
+//
+//        int x = Integer.parseInt("ahmed");
+//
+        try {
+            System.out.println(1/0);
+        }catch (ArithmeticException ex){
+            System.out.println("1");
+            throw ex;
+        }
+        finally {
+            System.out.println("Finally");
+        }
+        System.out.println("Done");
+
     }
+
+//    static void method() throws Exception {
+//        System.out.println(1 / 0);
+//    }
+//
+    static void method() throws Exception {
+        try {
+            String s = "abc";
+            System.out.println(s.charAt(3));
+        }
+        catch (RuntimeException ex) {
+            System.out.println("RuntimeException in method()");
+        }
+        catch (Exception ex) {
+            System.out.println("Exception in method()");
+        }
+    }
+
     // Case1 Not preferred The method can terminate the program
     public static int Quotient(int n1 ,int n2){
         if(n2==0){
@@ -36,6 +131,10 @@ public class MainIdea {
         return n1/n2;
     }
 
+//    public void m(int value) throws Exception{
+//        if (value < 40)
+//            throw new Exception("value is too small");
+//    }
 
     // Case2 Preferred Due to the method can not terminate the program and throw an exception to the caller
     public static int QoutientWithException(int n1 , int n2){
@@ -115,6 +214,57 @@ public class MainIdea {
 *
 *   11.4) RuntimeException, Error, and their subclasses are unchecked exception (Logic error cannot be detected from the compiler)
 *         All other exceptions are known as checked exceptions -> can be detected by the compiler and suggest to maintain it by try-catch block or throw exception in the method header
+*
+*   12) handling an exception is based on 3 operations -> declaring an exception, throwing it,catcging it
+*
+*   13) The throws keyword
+*       13.1) indicates that myMethod might throw an Exception
+*       13.2) defined only in the header of the method
+*       13.3) one method can throw multiple number of exception using throws ex,ex2,ex3.....
+*       13.4) used to declare exception on the header of the method
+*
+*   14) throwing exceptions:
+*       A program that detects an error can create an instance of an appropriate exception type and throw it.
+*       ex. -> throw new ArithmeticException("Divisor can not be Zero!"); constructor with string arg that throw exception with msg can be got using ex.getMessage()
+*
+*   15) The keyword to declare an exception is throws, and the keyword to throw an exception is throw.
+*
+*   16) Catching exception:
+*       16.1) When an exception is thrown, it can be caught and handled in a try-catch block.
+*       16.2) it's the process to find a handler through a chain of methods being invoked
+*       16.3) Catch blocks are skipped if no exception occurred inside the try block
+*       16.4) if one statement in try block throws an exception Java skips the remaining statements in the try block
+*
+*   17) The order in which exceptions are specified in catch blocks is important
+*           A compile error will result if a catch block for a superclass type appears before a catch block for a subclass type
+*
+*   18) multi-catch feature
+*       to simplify coding for the exceptions with the same handling code.
+*       catch(Exception1 | Exception2 | ... | Exception ex){
+*           /// code
+*           }
+*   19) Finally clause:
+*       is always executed regardless whether an exception occurred or not!
+*       19.1) Consider three possible cases:
+*               1) No exception occurred in try block -> finally will be executed --> after (try-catch-finally) block will be executed!
+*               2) Exception occurred in try block--> catch will be executed --> finally will be executed-->     after (try-catch-finally) block will be executed!--> rest of try block will be skipped!!
+*               3) Exception occurred in try block but no catch block got it--> finally will be executed --> the exception is passed to the caller of this method--> after (try-catch-finally) block will be skipped!!
+*
+*   20) Rethrowing Exceptions:
+*       Java allows an exception handler to rethrow the exception if the handler cannot
+        process the exception or simply wants to let its caller be notified of the exception
+        try {
+               statements;
+            }
+            catch (TheException ex) {
+                perform operations before exits;
+                throw ex;
+         }
+    21)
+*
+*
+*
+*
 *
 *
 *
